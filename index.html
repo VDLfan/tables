@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Darts League</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%2311151C' stroke='%23FF3B30' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23FF3B30'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F4F7;
+    --bg-card:#FFFFFF;
+    --ink:#11151C;
+    --muted:#6B7280;
+    --muted-soft:#9AA1AC;
+    --line:#E6E8EC;
+    --accent:#FF3B30;
+    --blue:#0B5FFF;
+    --gold-c:#D4A437;
+    --silver-c:#9AA5B1;
+    --bronze-c:#C58A52;
+    --plat-c:#C0CAD8;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(17,21,28,.04),0 8px 24px rgba(17,21,28,.07);
+    --band-color:var(--ink);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;}
+  a{color:var(--blue);text-decoration:none;}
+  ::selection{background:var(--accent);color:#fff;}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+
+  /* ====== SHARED HEADER ====== */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:14px 20px;background:var(--bg-card);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:100;
+  }
+  .brand{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+  .brand .mark{width:32px;height:32px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand .mark span{width:9px;height:9px;border-radius:50%;background:var(--accent);}
+  .brand-text strong{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:.01em;text-transform:uppercase;display:block;line-height:1;}
+  .brand-text small{font-size:10.5px;color:var(--muted);letter-spacing:.03em;}
+
+  .lang-wrap{display:flex;align-items:center;gap:8px;}
+  .lang-select{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    padding:7px 10px;border:1px solid var(--line);border-radius:8px;
+    background:var(--bg);color:var(--ink);cursor:pointer;appearance:none;
+    -webkit-appearance:none;padding-right:24px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%236B7280' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 6px center;
+  }
+  .back-btn{
+    display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    color:var(--muted);background:none;border:none;cursor:pointer;padding:4px 0;
+    transition:color .15s;
+  }
+  .back-btn:hover{color:var(--ink);}
+  .back-btn svg{width:15px;height:15px;}
+
+  /* ====== VIEWS ====== */
+  #view-home,#view-standings{transition:opacity .18s;}
+  #view-home.hidden,#view-standings.hidden{display:none;}
+
+  /* ====== HOME ====== */
+  .home-wrap{max-width:780px;margin:0 auto;padding:60px 20px 80px;text-align:center;}
+  .home-logo{margin-bottom:36px;}
+  .home-logo svg{width:120px;height:120px;}
+  .home-title{
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;
+    text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0 0 10px;
+  }
+  .home-sub{font-size:16px;color:var(--muted);margin:0 0 52px;}
+
+  .band-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:520px;margin:0 auto;}
+  @media(max-width:520px){.band-grid{grid-template-columns:1fr;}}
+  .band-card{
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    padding:28px 20px 24px;border-radius:var(--radius);
+    background:var(--bg-card);border:1px solid var(--line);
+    box-shadow:var(--shadow);cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;
+    position:relative;overflow:hidden;text-align:center;
+  }
+  .band-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--band-color);}
+  .band-card:hover{transform:translateY(-3px);box-shadow:0 4px 8px rgba(17,21,28,.04),0 16px 40px rgba(17,21,28,.12);}
+  .band-card:hover{border-color:color-mix(in srgb,var(--band-color) 35%,transparent);}
+  .band-icon{
+    width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#fff;
+    background:var(--band-color);
+  }
+  .band-card h2{
+    font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;
+    text-transform:uppercase;letter-spacing:.01em;margin:0;
+  }
+  .band-card p{font-size:13px;color:var(--muted);margin:0;}
+  .band-cta{
+    margin-top:4px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--band-color);
+  }
+
+  /* ====== STANDINGS ====== */
+  .standings-wrap{max-width:1180px;margin:0 auto;padding:22px 20px 60px;}
+  .page-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .page-head h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:32px;text-transform:uppercase;margin:0;}
+  .page-head .page-sub{font-size:13px;color:var(--muted);margin:0;}
+  .live-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--accent);
+    background:#FFEDEB;border:1px solid #FFD7D2;border-radius:999px;padding:5px 10px;
+  }
+  .live-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.8s ease-out infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,48,.45);}70%{box-shadow:0 0 0 6px rgba(255,59,48,0);}100%{box-shadow:0 0 0 0 rgba(255,59,48,0);}}
+
+  /* Divisions */
+  .divisions{display:flex;gap:7px;overflow-x:auto;padding:3px 0 14px;scrollbar-width:thin;}
+  .divisions::-webkit-scrollbar{height:5px;}
+  .divisions::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px;}
+  .divtab{
+    flex-shrink:0;font-size:13px;font-weight:600;padding:8px 15px;border-radius:999px;
+    background:var(--bg-card);border:1px solid var(--line);color:var(--muted);
+    cursor:pointer;transition:all .15s;
+  }
+  .divtab:hover{color:var(--ink);border-color:#cfd3d9;}
+  .divtab.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+  /* Podium */
+  .podium{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:12px;margin:0 0 22px;}
+  @media(max-width:700px){.podium{grid-template-columns:1fr;}}
+  .pcard{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:10px;
+    position:relative;overflow:hidden;
+  }
+  .pcard::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--line);}
+  .pcard.r1::before{background:linear-gradient(90deg,var(--gold-c),#F3D27C);}
+  .pcard.r2::before{background:var(--silver-c);}
+  .pcard.r3::before{background:var(--bronze-c);}
+  .pcard .rankno{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;letter-spacing:.05em;color:var(--muted-soft);text-transform:uppercase;}
+  .pcard .who{display:flex;align-items:center;gap:12px;}
+  .avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:#fff;flex-shrink:0;}
+  .r1 .avatar{background:linear-gradient(135deg,var(--gold-c),#b9852a);}
+  .r2 .avatar{background:linear-gradient(135deg,var(--silver-c),#76808c);}
+  .r3 .avatar{background:linear-gradient(135deg,var(--bronze-c),#93623a);}
+  .pcard .name{font-weight:700;font-size:15px;line-height:1.15;word-break:break-word;}
+  .pcard .statline{display:flex;align-items:baseline;gap:6px;}
+  .pcard .statline .big{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:30px;line-height:1;}
+  .pcard .statline .lbl{font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;}
+  .pcard .micro{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
+
+  /* Table panel */
+  .panel{background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .division-name{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;}
+  .meta-row{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);}
+  .refresh-btn{
+    display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+    color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;
+    padding:7px 11px;cursor:pointer;transition:all .15s;
+  }
+  .refresh-btn:hover{background:#EDEFF3;}
+  .refresh-btn svg{width:13px;height:13px;}
+  .refresh-btn.spinning svg{animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .table-scroll{overflow-x:auto;}
+  table{border-collapse:collapse;width:100%;min-width:980px;}
+  thead th{
+    position:sticky;top:0;background:#FAFAFB;z-index:2;text-align:left;
+    font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--muted);padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  thead th:first-child,tbody td:first-child{position:sticky;left:0;z-index:1;background:#FAFAFB;}
+  thead th:nth-child(2),tbody td:nth-child(2){position:sticky;left:50px;z-index:1;}
+  tbody td:nth-child(2){background:var(--bg-card);}
+  tbody tr:nth-child(even) td:nth-child(2){background:#FBFBFC;}
+  tbody td{padding:10px 12px;border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);white-space:nowrap;}
+  tbody td.player-cell{font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;}
+  tbody tr:nth-child(even){background:#FBFBFC;}
+  tbody tr:hover td{background:#F2F6FF;}
+  tbody tr:hover td:first-child,tbody tr:hover td:nth-child(2){background:#EDF2FE;}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  td.pts{color:var(--blue);font-weight:700;}
+  td.diff-pos{color:#1E9E5A;}
+  td.diff-neg{color:var(--accent);}
+  td.highlight{color:#B9852A;font-weight:700;}
+  .rankbadge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;font-weight:700;font-size:12px;font-family:'Barlow Condensed',sans-serif;}
+  .rank-1{background:var(--gold-c);color:#1c1305;}
+  .rank-2{background:var(--silver-c);color:#1c1305;}
+  .rank-3{background:var(--bronze-c);color:#241405;}
+  .rank-n{background:transparent;color:var(--muted);border:1px solid var(--line);}
+  .state-row td{text-align:center;padding:44px 20px;color:var(--muted);font-family:'Inter',sans-serif;font-size:14px;}
+  .skeleton{height:14px;border-radius:4px;background:linear-gradient(90deg,#ECEDF0 25%,#E2E4E8 37%,#ECEDF0 63%);background-size:400% 100%;animation:shimmer 1.4s ease infinite;}
+  @keyframes shimmer{0%{background-position:100% 0;}100%{background-position:0 0;}}
+
+  footer{margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);}
+
+  @media(max-width:680px){.home-title{font-size:40px;}.wrap,.standings-wrap{padding:14px 12px 40px;}}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:0.001ms !important;transition:none !important;}}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="brand" id="brand-home">
+    <div class="mark"><span></span></div>
+    <div class="brand-text">
+      <strong>VDL</strong>
+      <small>Virtual Darts League</small>
+    </div>
+  </div>
+  <div class="lang-wrap">
+    <button class="back-btn hidden" id="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      <span data-i18n="back">Back</span>
+    </button>
+    <select class="lang-select" id="lang-select" aria-label="Language">
+      <option value="en">🇬🇧 EN</option>
+      <option value="pt">🇵🇹 PT</option>
+      <option value="es">🇪🇸 ES</option>
+      <option value="fr">🇫🇷 FR</option>
+      <option value="pl">🇵🇱 PL</option>
+      <option value="sv">🇸🇪 SV</option>
+      <option value="de">🇩🇪 DE</option>
+      <option value="at">🇦🇹 AT</option>
+      <option value="da">🇩🇰 DA</option>
+      <option value="nl">🇳🇱 NL</option>
+      <option value="be">🇧🇪 BE</option>
+    </select>
+  </div>
+</header>
+
+<!-- HOME VIEW -->
+<div id="view-home">
+  <div class="home-wrap">
+    <div class="home-logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="56" fill="#11151C"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="#2A3240" stroke-width="2"/>
+        <circle cx="60" cy="60" r="40" fill="#1E2738"/>
+        <circle cx="60" cy="60" r="30" fill="#C8102E"/>
+        <circle cx="60" cy="60" r="20" fill="#FFFFFF"/>
+        <circle cx="60" cy="60" r="10" fill="#C8102E"/>
+        <circle cx="60" cy="60" r="4"  fill="#D4A437"/>
+        <!-- dart -->
+        <line x1="60" y1="4" x2="60" y2="56" stroke="#D4A437" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="60,4 56,14 64,14" fill="#D4A437"/>
+        <rect x="57.5" y="2" width="5" height="5" rx="1" fill="#C8D4E0"/>
+      </svg>
+    </div>
+    <h1 class="home-title" data-i18n="homeTitle">Virtual Darts League</h1>
+    <p class="home-sub" data-i18n="homeSub">Choose your league to view the standings</p>
+    <div class="band-grid" id="band-grid"></div>
+  </div>
+</div>
+
+<!-- STANDINGS VIEW -->
+<div id="view-standings" class="hidden">
+  <div class="standings-wrap">
+    <div class="page-head">
+      <div>
+        <h1 id="standings-h1" data-i18n="h1">Standings</h1>
+        <p class="page-sub" data-i18n="sub">Data synced live from the league's official spreadsheet.</p>
+      </div>
+      <span class="live-pill"><span class="dot"></span><span data-i18n="live">Live</span></span>
+    </div>
+    <nav class="divisions" id="divisions"></nav>
+    <div class="podium" id="podium"></div>
+    <section class="panel">
+      <div class="panel-head">
+        <span class="division-name" id="division-name">—</span>
+        <div class="meta-row">
+          <span id="updated-label">—</span>
+          <button class="refresh-btn" id="refresh-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+            <span data-i18n="refresh">Refresh</span>
+          </button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr id="table-head"></tr></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </section>
+    <footer>
+      <span id="footer-note">—</span>
+      <a id="source-link" href="#" target="_blank" rel="noopener">Google Sheets →</a>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================================================================
+   DATA
+================================================================ */
+var BANDS = {
+  platinum: {
+    key:"platinum", sheetId:"1yVALkrBiEvPGELeXbaAkpqTwX7GZ_m4mknhP17ys1k8",
+    color:"#C0CAD8", icon:"⬡",
+    en:"Platinum", pt:"Platinum", es:"Platinum", fr:"Platinum",
+    pl:"Platinum", sv:"Platinum", de:"Platinum", at:"Platinum",
+    da:"Platinum", nl:"Platinum", be:"Platinum",
+    divisions:[
+      {sheet:"Platinum PL",  en:"Premier League", pt:"Liga Principal", es:"Liga Premier", fr:"Ligue Premier", pl:"Liga Premierowa", sv:"Premier League", de:"Premier League", at:"Premier League", da:"Premier League", nl:"Premier League", be:"Premier League"},
+      {sheet:"Platinum Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
+      {sheet:"Platinum Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
+      {sheet:"Platinum Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
+      {sheet:"Platinum Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
+      {sheet:"Platinum Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
+      {sheet:"Platinum Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
+      {sheet:"Platinum Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
+      {sheet:"Platinum Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
+      {sheet:"Platinum Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+    ]
+  },
+  gold: {
+    key:"gold", sheetId:"18KMO6gFf6zhzU-9CnXARWmOXJnG5X8hAI1-1LsSvnc8",
+    color:"#D4A437", icon:"★",
+    en:"Gold", pt:"Gold", es:"Gold", fr:"Gold",
+    pl:"Gold", sv:"Gold", de:"Gold", at:"Gold",
+    da:"Gold", nl:"Gold", be:"Gold",
+    divisions:[
+      {sheet:"Gold PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",at:"Premier League",da:"Premier League",nl:"Premier League",be:"Premier League"},
+      {sheet:"Gold Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
+      {sheet:"Gold Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
+      {sheet:"Gold Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
+      {sheet:"Gold Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
+      {sheet:"Gold Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
+      {sheet:"Gold Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
+      {sheet:"Gold Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
+      {sheet:"Gold Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
+      {sheet:"Gold Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+    ]
+  },
+  silver: {
+    key:"silver", sheetId:"1zgvu8lcFS77QVxOdUbRaVY2dAJvA5gApg9VuvLfPCB8",
+    color:"#9AA5B1", icon:"◆",
+    en:"Silver", pt:"Silver", es:"Silver", fr:"Silver",
+    pl:"Silver", sv:"Silver", de:"Silver", at:"Silver",
+    da:"Silver", nl:"Silver", be:"Silver",
+    divisions:[
+      {sheet:"Silver PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",at:"Premier League",da:"Premier League",nl:"Premier League",be:"Premier League"},
+      {sheet:"Silver Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
+      {sheet:"Silver Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
+      {sheet:"Silver Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
+      {sheet:"Silver Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
+      {sheet:"Silver Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
+      {sheet:"Silver Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
+      {sheet:"Silver Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
+      {sheet:"Silver Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
+      {sheet:"Silver Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+    ]
+  },
+  bronze: {
+    key:"bronze", sheetId:"1u3qARt8pWOdn5F8gmXTcHjNo3QjOLnQk1sHDNyfmuGQ",
+    color:"#C58A52", icon:"●",
+    en:"Bronze", pt:"Bronze", es:"Bronze", fr:"Bronze",
+    pl:"Bronze", sv:"Bronze", de:"Bronze", at:"Bronze",
+    da:"Bronze", nl:"Bronze", be:"Bronze",
+    divisions:[
+      {sheet:"Bronze PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",at:"Premier League",da:"Premier League",nl:"Premier League",be:"Premier League"},
+      {sheet:"Bronze Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
+      {sheet:"Bronze Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
+      {sheet:"Bronze Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
+      {sheet:"Bronze Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
+      {sheet:"Bronze Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
+      {sheet:"Bronze Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
+      {sheet:"Bronze Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
+      {sheet:"Bronze Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
+      {sheet:"Bronze Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+    ]
+  }
+};
+
+var COLUMNS = [
+  {key:"pos",  idx:0,  en:"#",   pt:"#",   es:"#",   fr:"#",   pl:"#",   sv:"#",   de:"#",   at:"#",   da:"#",   nl:"#",   be:"#",   numeric:true},
+  {key:"player",idx:1, en:"Player",pt:"Jogador",es:"Jugador",fr:"Joueur",pl:"Gracz",sv:"Spelare",de:"Spieler",at:"Spieler",da:"Spiller",nl:"Speler",be:"Speler",numeric:false},
+  {key:"p",   idx:2,  en:"P",  pt:"J",  es:"PJ", fr:"J",  pl:"M",  sv:"S",  de:"S",  at:"S",  da:"S",  nl:"S",  be:"S",  numeric:true,title_en:"Played",title_pt:"Jogos",title_es:"Jugados",title_fr:"Joués",title_pl:"Mecze",title_sv:"Spelade",title_de:"Spiele",title_at:"Spiele",title_da:"Spillede",title_nl:"Gespeeld",title_be:"Gespeeld"},
+  {key:"w",   idx:3,  en:"W",  pt:"V",  es:"G",  fr:"V",  pl:"W",  sv:"V",  de:"S",  at:"S",  da:"V",  nl:"W",  be:"W",  numeric:true,title_en:"Won",title_pt:"Vitórias",title_es:"Ganados",title_fr:"Victoires",title_pl:"Wygrane",title_sv:"Vinster",title_de:"Siege",title_at:"Siege",title_da:"Vundet",title_nl:"Gewonnen",title_be:"Gewonnen"},
+  {key:"d",   idx:4,  en:"D",  pt:"E",  es:"E",  fr:"N",  pl:"R",  sv:"O",  de:"U",  at:"U",  da:"U",  nl:"G",  be:"G",  numeric:true,title_en:"Drawn",title_pt:"Empates",title_es:"Empates",title_fr:"Nuls",title_pl:"Remisy",title_sv:"Oavgjort",title_de:"Unentschieden",title_at:"Unentschieden",title_da:"Uafgjort",title_nl:"Gelijk",title_be:"Gelijk"},
+  {key:"l",   idx:5,  en:"L",  pt:"D",  es:"P",  fr:"D",  pl:"P",  sv:"F",  de:"N",  at:"N",  da:"T",  nl:"V",  be:"V",  numeric:true,title_en:"Lost",title_pt:"Derrotas",title_es:"Perdidos",title_fr:"Défaites",title_pl:"Przegrane",title_sv:"Förluster",title_de:"Niederlagen",title_at:"Niederlagen",title_da:"Tabt",title_nl:"Verloren",title_be:"Verloren"},
+  {key:"f",   idx:6,  en:"F",  pt:"M",  es:"FA", fr:"BP", pl:"S",  sv:"SF", de:"Bf", at:"Bf", da:"S",  nl:"V",  be:"V",  numeric:true,title_en:"Legs For",title_pt:"Legs Marcados",title_es:"Legs a Favor",title_fr:"Legs Pour",title_pl:"Legs za",title_sv:"Legs för",title_de:"Legs dafür",title_at:"Legs dafür",title_da:"Legs for",title_nl:"Legs voor",title_be:"Legs voor"},
+  {key:"a",   idx:7,  en:"A",  pt:"S",  es:"EC", fr:"BC", pl:"Str",sv:"SM", de:"Bg", at:"Bg", da:"I",  nl:"T",  be:"T",  numeric:true,title_en:"Legs Against",title_pt:"Legs Sofridos",title_es:"Legs en Contra",title_fr:"Legs Contre",title_pl:"Legs przeciw",title_sv:"Legs mot",title_de:"Legs dagegen",title_at:"Legs dagegen",title_da:"Legs imod",title_nl:"Legs tegen",title_be:"Legs tegen"},
+  {key:"diff",idx:8,  en:"+/-",pt:"+/-",es:"+/-",fr:"+/-",pl:"+/-",sv:"+/-",de:"+/-",at:"+/-",da:"+/-",nl:"+/-",be:"+/-",numeric:true,title_en:"Leg Difference",title_pt:"Diferença",title_es:"Diferencia",title_fr:"Différence",title_pl:"Różnica",title_sv:"Differens",title_de:"Differenz",title_at:"Differenz",title_da:"Forskel",title_nl:"Verschil",title_be:"Verschil"},
+  {key:"pts", idx:9,  en:"Pts",pt:"Pts",es:"Pts",fr:"Pts",pl:"Pkt",sv:"Pts",de:"Pkt",at:"Pkt",da:"Pt", nl:"Pnt",be:"Pnt",numeric:true,isPts:true,title_en:"Points",title_pt:"Pontos",title_es:"Puntos",title_fr:"Points",title_pl:"Punkty",title_sv:"Poäng",title_de:"Punkte",title_at:"Punkte",title_da:"Point",title_nl:"Punten",title_be:"Punten"},
+  {key:"avg", idx:12, en:"Avg",pt:"Avg",es:"Med",fr:"Moy",pl:"Śr", sv:"Sn", de:"Schn",at:"Schn",da:"Gns",nl:"Gem",be:"Gem",numeric:true,decimals:2,title_en:"Match Average",title_pt:"Média de jogo",title_es:"Media por partido",title_fr:"Moyenne par match",title_pl:"Średnia meczu",title_sv:"Matchsnitt",title_de:"Spielschnitt",title_at:"Spielschnitt",title_da:"Kampgennemsnit",title_nl:"Wedstrijdgemiddelde",title_be:"Wedstrijdgemiddelde"},
+  {key:"first9",idx:13,en:"1st9",pt:"1ªs9",es:"1ªs9",fr:"1ers9",pl:"1-9",sv:"F9",de:"E9",at:"E9",da:"F9",nl:"E9",be:"E9",numeric:true,decimals:2,title_en:"First 9 Darts Average",title_pt:"Média das primeiras 9 setas",title_es:"Media primeras 9 setas",title_fr:"Moyenne 9 premières fléchettes",title_pl:"Średnia pierwszych 9 rzutów",title_sv:"Snitt första 9",title_de:"Schnitt erste 9",title_at:"Schnitt erste 9",title_da:"Snit første 9",title_nl:"Gem. eerste 9",title_be:"Gem. eerste 9"},
+  {key:"s60", idx:14, en:"60+",pt:"60+",es:"60+",fr:"60+",pl:"60+",sv:"60+",de:"60+",at:"60+",da:"60+",nl:"60+",be:"60+",numeric:true,title_en:"Scores 60–79",title_pt:"Acertos 60 a 79",title_es:"Marcas 60–79",title_fr:"Scores 60–79",title_pl:"Wyniki 60–79",title_sv:"Poäng 60–79",title_de:"Werte 60–79",title_at:"Werte 60–79",title_da:"Point 60–79",title_nl:"Scores 60–79",title_be:"Scores 60–79"},
+  {key:"s80", idx:15, en:"80+",pt:"80+",es:"80+",fr:"80+",pl:"80+",sv:"80+",de:"80+",at:"80+",da:"80+",nl:"80+",be:"80+",numeric:true,title_en:"Scores 80–99",title_pt:"Acertos 80 a 99",title_es:"Marcas 80–99",title_fr:"Scores 80–99",title_pl:"Wyniki 80–99",title_sv:"Poäng 80–99",title_de:"Werte 80–99",title_at:"Werte 80–99",title_da:"Point 80–99",title_nl:"Scores 80–99",title_be:"Scores 80–99"},
+  {key:"s100",idx:16, en:"100+",pt:"100+",es:"100+",fr:"100+",pl:"100+",sv:"100+",de:"100+",at:"100+",da:"100+",nl:"100+",be:"100+",numeric:true,title_en:"Scores 100–119",title_pt:"Acertos 100 a 119",title_es:"Marcas 100–119",title_fr:"Scores 100–119",title_pl:"Wyniki 100–119",title_sv:"Poäng 100–119",title_de:"Werte 100–119",title_at:"Werte 100–119",title_da:"Point 100–119",title_nl:"Scores 100–119",title_be:"Scores 100–119"},
+  {key:"s120",idx:17, en:"120+",pt:"120+",es:"120+",fr:"120+",pl:"120+",sv:"120+",de:"120+",at:"120+",da:"120+",nl:"120+",be:"120+",numeric:true,title_en:"Scores 120–139",title_pt:"Acertos 120 a 139",title_es:"Marcas 120–139",title_fr:"Scores 120–139",title_pl:"Wyniki 120–139",title_sv:"Poäng 120–139",title_de:"Werte 120–139",title_at:"Werte 120–139",title_da:"Point 120–139",title_nl:"Scores 120–139",title_be:"Scores 120–139"},
+  {key:"s140",idx:18, en:"140+",pt:"140+",es:"140+",fr:"140+",pl:"140+",sv:"140+",de:"140+",at:"140+",da:"140+",nl:"140+",be:"140+",numeric:true,title_en:"Scores 140–179",title_pt:"Acertos 140 a 179",title_es:"Marcas 140–179",title_fr:"Scores 140–179",title_pl:"Wyniki 140–179",title_sv:"Poäng 140–179",title_de:"Werte 140–179",title_at:"Werte 140–179",title_da:"Point 140–179",title_nl:"Scores 140–179",title_be:"Scores 140–179"},
+  {key:"t180",idx:19, en:"180s",pt:"180s",es:"180s",fr:"180s",pl:"180s",sv:"180s",de:"180s",at:"180s",da:"180s",nl:"180s",be:"180s",numeric:true,isHot:true,title_en:"Maximums (180)",title_pt:"Máximos (180)",title_es:"Máximos (180)",title_fr:"Maximums (180)",title_pl:"Maksima (180)",title_sv:"Maximal (180)",title_de:"Maximum (180)",title_at:"Maximum (180)",title_da:"Maksimum (180)",title_nl:"Maximum (180)",title_be:"Maximum (180)"},
+  {key:"hco", idx:20, en:"H/Out",pt:"Fecho Máx.",es:"Cierre Máx.",fr:"Finition Max.",pl:"Max. zamknięcie",sv:"Bästa Checkout",de:"Höchster Checkout",at:"Höchster Checkout",da:"Højeste Checkout",nl:"Hoogste Checkout",be:"Hoogste Checkout",numeric:true,isHot:true,title_en:"Highest Checkout",title_pt:"Maior fecho de leg",title_es:"Cierre máximo",title_fr:"Finition maximale",title_pl:"Najwyższe zamknięcie",title_sv:"Bästa checkout",title_de:"Höchster Checkout",title_at:"Höchster Checkout",title_da:"Højeste checkout",title_nl:"Hoogste checkout",title_be:"Hoogste checkout"},
+  {key:"bl",  idx:21, en:"Best Leg",pt:"Melhor Leg",es:"Mejor Leg",fr:"Meilleure Manche",pl:"Najlepsza noga",sv:"Bästa Leg",de:"Bestes Leg",at:"Bestes Leg",da:"Bedste Leg",nl:"Beste Leg",be:"Beste Leg",numeric:true,title_en:"Best Leg (fewest darts)",title_pt:"Melhor leg (menos setas)",title_es:"Mejor leg (menos dardos)",title_fr:"Meilleure manche (moins de fléchettes)",title_pl:"Najlepsza noga (najmniej rzutów)",title_sv:"Bästa leg (minst pilar)",title_de:"Bestes Leg (wenigste Darts)",title_at:"Bestes Leg (wenigste Darts)",title_da:"Bedste leg (færreste pile)",title_nl:"Beste leg (minste darts)",title_be:"Beste leg (minste darts)"}
+];
+
+var I18N = {
+  en:{homeTitle:"Virtual Darts League",homeSub:"Choose your league to view the standings",chooseLbl:"View Standings",h1:"Standings",sub:"Data synced live from the league's official spreadsheet.",live:"Live",refresh:"Refresh",loading:"Loading data…",error:"Could not load data for this division.",retry:"Try again",empty:"No results yet for this division.",updated:"Updated at",back:"Back",pts:"PTS",footerNote:"Data synced live from Google Sheets."},
+  pt:{homeTitle:"Virtual Darts League",homeSub:"Escolha a sua liga para ver as classificações",chooseLbl:"Ver Classificações",h1:"Classificações",sub:"Dados sincronizados em direto a partir da folha oficial da liga.",live:"Em direto",refresh:"Atualizar",loading:"A carregar dados…",error:"Não foi possível carregar os dados desta divisão.",retry:"Tentar novamente",empty:"Ainda não há resultados nesta divisão.",updated:"Atualizado às",back:"Voltar",pts:"PTS",footerNote:"Dados sincronizados em direto a partir do Google Sheets."},
+  es:{homeTitle:"Liga Virtual de Dardos",homeSub:"Elige tu liga para ver las clasificaciones",chooseLbl:"Ver Clasificación",h1:"Clasificaciones",sub:"Datos sincronizados en vivo desde la hoja oficial de la liga.",live:"En vivo",refresh:"Actualizar",loading:"Cargando datos…",error:"No se pudieron cargar los datos de esta división.",retry:"Reintentar",empty:"Aún no hay resultados en esta división.",updated:"Actualizado a las",back:"Volver",pts:"PTS",footerNote:"Datos sincronizados en vivo desde Google Sheets."},
+  fr:{homeTitle:"Ligue Virtuelle de Fléchettes",homeSub:"Choisissez votre ligue pour voir les classements",chooseLbl:"Voir le Classement",h1:"Classements",sub:"Données synchronisées en direct depuis la feuille officielle de la ligue.",live:"En direct",refresh:"Actualiser",loading:"Chargement des données…",error:"Impossible de charger les données de cette division.",retry:"Réessayer",empty:"Pas encore de résultats dans cette division.",updated:"Mis à jour à",back:"Retour",pts:"PTS",footerNote:"Données synchronisées en direct depuis Google Sheets."},
+  pl:{homeTitle:"Wirtualna Liga Darta",homeSub:"Wybierz ligę, aby zobaczyć tabelę",chooseLbl:"Zobacz Tabelę",h1:"Tabela",sub:"Dane synchronizowane na żywo z oficjalnego arkusza ligi.",live:"Na żywo",refresh:"Odśwież",loading:"Ładowanie danych…",error:"Nie udało się załadować danych tej dywizji.",retry:"Spróbuj ponownie",empty:"Brak wyników w tej dywizji.",updated:"Zaktualizowano o",back:"Powrót",pts:"PKT",footerNote:"Dane synchronizowane na żywo z Google Sheets."},
+  sv:{homeTitle:"Virtuell Dartliga",homeSub:"Välj din liga för att se tabellen",chooseLbl:"Visa Tabell",h1:"Tabeller",sub:"Data synkroniseras live från ligans officiella kalkylblad.",live:"Live",refresh:"Uppdatera",loading:"Laddar data…",error:"Kunde inte ladda data för denna division.",retry:"Försök igen",empty:"Inga resultat än i denna division.",updated:"Uppdaterad kl.",back:"Tillbaka",pts:"P",footerNote:"Data synkroniseras live från Google Sheets."},
+  de:{homeTitle:"Virtuelle Dart-Liga",homeSub:"Wähle deine Liga, um die Tabelle zu sehen",chooseLbl:"Tabelle ansehen",h1:"Tabellen",sub:"Daten werden live aus dem offiziellen Ligablatt synchronisiert.",live:"Live",refresh:"Aktualisieren",loading:"Daten werden geladen…",error:"Die Daten für diese Division konnten nicht geladen werden.",retry:"Erneut versuchen",empty:"Noch keine Ergebnisse in dieser Division.",updated:"Aktualisiert um",back:"Zurück",pts:"Pkt",footerNote:"Daten werden live von Google Sheets synchronisiert."},
+  at:{homeTitle:"Virtuelle Dart-Liga",homeSub:"Wähle deine Liga, um die Tabelle zu sehen",chooseLbl:"Tabelle ansehen",h1:"Tabellen",sub:"Daten werden live aus dem offiziellen Ligablatt synchronisiert.",live:"Live",refresh:"Aktualisieren",loading:"Daten werden geladen…",error:"Die Daten für diese Division konnten nicht geladen werden.",retry:"Erneut versuchen",empty:"Noch keine Ergebnisse in dieser Division.",updated:"Aktualisiert um",back:"Zurück",pts:"Pkt",footerNote:"Daten werden live von Google Sheets synchronisiert."},
+  da:{homeTitle:"Virtuel Dartliga",homeSub:"Vælg din liga for at se tabellen",chooseLbl:"Se Tabellen",h1:"Tabeller",sub:"Data synkroniseres live fra ligaens officielle regneark.",live:"Live",refresh:"Opdater",loading:"Indlæser data…",error:"Kunne ikke indlæse data for denne division.",retry:"Prøv igen",empty:"Ingen resultater endnu i denne division.",updated:"Opdateret kl.",back:"Tilbage",pts:"Pt",footerNote:"Data synkroniseres live fra Google Sheets."},
+  nl:{homeTitle:"Virtuele Darts Competitie",homeSub:"Kies je competitie om de standen te bekijken",chooseLbl:"Standen bekijken",h1:"Standen",sub:"Data wordt live gesynchroniseerd vanuit het officiële competitieblad.",live:"Live",refresh:"Vernieuwen",loading:"Data laden…",error:"Kon de data voor deze divisie niet laden.",retry:"Opnieuw proberen",empty:"Nog geen resultaten in deze divisie.",updated:"Bijgewerkt om",back:"Terug",pts:"Pnt",footerNote:"Data wordt live gesynchroniseerd vanuit Google Sheets."},
+  be:{homeTitle:"Virtuele Darts Competitie",homeSub:"Kies je competitie om de standen te bekijken",chooseLbl:"Standen bekijken",h1:"Standen",sub:"Data wordt live gesynchroniseerd vanuit het officiële competitieblad.",live:"Live",refresh:"Vernieuwen",loading:"Data laden…",error:"Kon de data voor deze divisie niet laden.",retry:"Opnieuw proberen",empty:"Nog geen resultaten in deze divisie.",updated:"Bijgewerkt om",back:"Terug",pts:"Pnt",footerNote:"Data wordt live gesynchroniseerd vanuit Google Sheets."}
+};
+
+/* ================================================================
+   STATE
+================================================================ */
+var state = {
+  lang: "en",
+  view: "home",   // "home" | "standings"
+  band: null,     // key of BANDS
+  divIndex: 0,
+  cache: {}       // "bandKey:sheetName" -> rows[]
+};
+
+/* ================================================================
+   HELPERS
+================================================================ */
+function t(k){ return (I18N[state.lang]||I18N.en)[k] || k; }
+function lv(obj){ return obj[state.lang] || obj.en; }
+function colLabel(c){ return c[state.lang] || c.en; }
+function colTitle(c){ return c["title_"+state.lang] || c["title_en"] || colLabel(c); }
+
+function initials(name){
+  if(!name) return "?";
+  var parts = String(name).replace(/[_.]+/g," ").trim().split(/\s+/);
+  return ((parts[0]||"")[0]||(parts[1]||"")[0]||"?").toUpperCase() +
+         ((parts[1]||"")[0]||"").toUpperCase();
+}
+
+function isJunk(name){
+  if(!name) return true;
+  var n = String(name).toLowerCase().trim();
+  return n.indexOf("owner") !== -1 || n === "vdl owners" || n === "" || n === "-";
+}
+
+/* ================================================================
+   DOM ELEMENTS
+================================================================ */
+var $ = function(id){ return document.getElementById(id); };
+var els = {
+  viewHome:      $("view-home"),
+  viewStandings: $("view-standings"),
+  backBtn:       $("back-btn"),
+  brandHome:     $("brand-home"),
+  langSelect:    $("lang-select"),
+  bandGrid:      $("band-grid"),
+  divisions:     $("divisions"),
+  podium:        $("podium"),
+  divisionName:  $("division-name"),
+  updatedLabel:  $("updated-label"),
+  refreshBtn:    $("refresh-btn"),
+  tableHead:     $("table-head"),
+  tableBody:     $("table-body"),
+  footerNote:    $("footer-note"),
+  sourceLink:    $("source-link"),
+  standingsH1:   $("standings-h1")
+};
+
+/* ================================================================
+   ROUTING
+================================================================ */
+function showHome(){
+  state.view = "home";
+  state.band = null;
+  els.viewHome.classList.remove("hidden");
+  els.viewStandings.classList.add("hidden");
+  els.backBtn.classList.add("hidden");
+  document.title = "Virtual Darts League";
+  applyI18n();
+  buildBandGrid();
+}
+
+function showStandings(bandKey, divIndex){
+  var band = BANDS[bandKey];
+  if(!band) return showHome();
+  state.view = "standings";
+  state.band = bandKey;
+  state.divIndex = divIndex || 0;
+  els.viewHome.classList.add("hidden");
+  els.viewStandings.classList.remove("hidden");
+  els.backBtn.classList.remove("hidden");
+  document.title = lv(band) + " Band — VDL";
+  var color = band.color;
+  document.documentElement.style.setProperty("--band-color", color);
+  els.sourceLink.href = "https://docs.google.com/spreadsheets/d/"+band.sheetId+"/edit";
+  applyI18n();
+  buildDivisionTabs();
+  buildHead();
+  loadDivision(false);
+}
+
+/* ================================================================
+   BUILD HOME
+================================================================ */
+function buildBandGrid(){
+  els.bandGrid.innerHTML = "";
+  ["platinum","gold","silver","bronze"].forEach(function(key){
+    var b = BANDS[key];
+    var card = document.createElement("div");
+    card.className = "band-card";
+    card.style.setProperty("--band-color", b.color);
+    card.innerHTML =
+      '<div class="band-icon">'+b.icon+'</div>'+
+      '<h2>'+lv(b)+' Band</h2>'+
+      '<p class="band-cta">'+t("chooseLbl")+'  →</p>';
+    card.addEventListener("click", function(){ showStandings(key,0); });
+    els.bandGrid.appendChild(card);
+  });
+}
+
+/* ================================================================
+   BUILD STANDINGS
+================================================================ */
+function buildDivisionTabs(){
+  var band = BANDS[state.band];
+  els.divisions.innerHTML = "";
+  band.divisions.forEach(function(d,i){
+    var btn = document.createElement("button");
+    btn.className = "divtab" + (i===state.divIndex?" active":"");
+    btn.textContent = lv(d);
+    btn.addEventListener("click", function(){
+      if(state.divIndex===i) return;
+      state.divIndex = i;
+      buildDivisionTabs();
+      loadDivision(false);
+    });
+    els.divisions.appendChild(btn);
+  });
+}
+
+function buildHead(){
+  els.tableHead.innerHTML = "";
+  COLUMNS.forEach(function(c){
+    var th = document.createElement("th");
+    th.textContent = colLabel(c);
+    th.title = colTitle(c);
+    els.tableHead.appendChild(th);
+  });
+}
+
+function gvizUrl(sheetId, sheetName){
+  return "https://docs.google.com/spreadsheets/d/"+sheetId+
+    "/gviz/tq?tqx=out:json&sheet="+encodeURIComponent(sheetName)+"&_="+Date.now();
+}
+
+function parseGviz(text){
+  var s = text.indexOf("{"), e = text.lastIndexOf("}");
+  var json = JSON.parse(text.substring(s,e+1));
+  var rows = (json.table||{}).rows||[];
+  var out = [];
+  rows.forEach(function(r){
+    var cells = r.c||[];
+    var pc = cells[1];
+    var pv = pc && pc.v != null ? String(pc.v).trim() : "";
+    if(isJunk(pv)) return;
+    var rec={};
+    COLUMNS.forEach(function(col){
+      var cell = cells[col.idx];
+      rec[col.key] = cell ? cell.v : null;
+    });
+    out.push(rec);
+  });
+  return out;
+}
+
+function showSkeleton(){
+  els.tableBody.innerHTML="";
+  for(var i=0;i<8;i++){
+    var tr=document.createElement("tr"); tr.className="state-row";
+    var td=document.createElement("td"); td.colSpan=COLUMNS.length;
+    var sk=document.createElement("div"); sk.className="skeleton";
+    sk.style.maxWidth=(55+Math.random()*35)+"%"; sk.style.margin="0 auto";
+    td.appendChild(sk); tr.appendChild(td); els.tableBody.appendChild(tr);
+  }
+  els.podium.innerHTML="";
+}
+
+function showMessage(msg, withRetry){
+  els.tableBody.innerHTML="";
+  var tr=document.createElement("tr"); tr.className="state-row";
+  var td=document.createElement("td"); td.colSpan=COLUMNS.length; td.textContent=msg;
+  if(withRetry){
+    var btn=document.createElement("button"); btn.className="refresh-btn";
+    btn.style.marginTop="12px"; btn.style.display="inline-flex"; btn.style.margin="12px auto 0";
+    btn.textContent=t("retry");
+    btn.addEventListener("click",function(){ loadDivision(true); });
+    td.appendChild(document.createElement("br")); td.appendChild(btn);
+  }
+  tr.appendChild(td); els.tableBody.appendChild(tr);
+  els.podium.innerHTML="";
+}
+
+function fmtNum(c,v){
+  if(v===null||v===undefined||v==="") return "—";
+  if(typeof v==="number"&&c.decimals) return v.toFixed(c.decimals);
+  return String(v);
+}
+
+function renderPodium(data){
+  els.podium.innerHTML="";
+  var top3=data.slice(0,3);
+  top3.forEach(function(row,i){
+    var rank=i+1;
+    var card=document.createElement("div"); card.className="pcard r"+rank;
+    card.innerHTML=
+      '<div class="rankno">#'+rank+'</div>'+
+      '<div class="who"><div class="avatar">'+initials(row.player)+'</div>'+
+        '<div class="name">'+(row.player||"—")+'</div></div>'+
+      '<div class="statline">'+
+        '<span class="big">'+(row.pts!=null?row.pts:"—")+'</span>'+
+        '<span class="lbl">'+t("pts")+'</span></div>'+
+      '<div class="micro">'+
+        (row.w!=null?row.w:"—")+'W '+
+        (row.d!=null?row.d:"—")+'D '+
+        (row.l!=null?row.l:"—")+'L</div>';
+    els.podium.appendChild(card);
+  });
+}
+
+function renderRows(){
+  var band=BANDS[state.band];
+  var sheetName=band.divisions[state.divIndex].sheet;
+  var cacheKey=state.band+":"+sheetName;
+  var data=(state.cache[cacheKey]||[]).slice();
+  els.tableBody.innerHTML="";
+  if(data.length===0){ showMessage(t("empty"),false); return; }
+  renderPodium(data);
+  data.forEach(function(row,i){
+    var tr=document.createElement("tr");
+    COLUMNS.forEach(function(c){
+      var td=document.createElement("td");
+      var val=row[c.key];
+      if(c.key==="pos"){
+        var rank=Number(row.pos)||(i+1);
+        var sp=document.createElement("span");
+        sp.className="rankbadge "+(rank===1?"rank-1":rank===2?"rank-2":rank===3?"rank-3":"rank-n");
+        sp.textContent=rank; td.appendChild(sp);
+      } else if(c.key==="player"){
+        td.className="player-cell"; td.textContent=val||"—";
+      } else if(c.key==="diff"){
+        td.classList.add("num");
+        var n=Number(val);
+        if(!isNaN(n)&&n>0) td.classList.add("diff-pos");
+        if(!isNaN(n)&&n<0) td.classList.add("diff-neg");
+        td.textContent=(val===null||val===undefined||val==="")?"—":(n>0?"+"+n:String(n));
+      } else {
+        td.classList.add("num");
+        if(c.isPts) td.classList.add("pts");
+        if(c.isHot&&val) td.classList.add("highlight");
+        td.textContent=fmtNum(c,val);
+      }
+      tr.appendChild(td);
+    });
+    els.tableBody.appendChild(tr);
+  });
+}
+
+function loadDivision(forceRefresh){
+  var band=BANDS[state.band];
+  var div=band.divisions[state.divIndex];
+  els.divisionName.textContent=lv(div);
+  els.refreshBtn.classList.add("spinning");
+  buildHead();
+  var cacheKey=state.band+":"+div.sheet;
+  if(!forceRefresh&&state.cache[cacheKey]){
+    renderRows();
+    els.refreshBtn.classList.remove("spinning");
+    return;
+  }
+  showSkeleton();
+  fetch(gvizUrl(band.sheetId,div.sheet),{cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+    .then(function(text){
+      state.cache[cacheKey]=parseGviz(text);
+      renderRows();
+      var loc=state.lang==="pt"?"pt-PT":state.lang==="da"?"da-DK":state.lang==="sv"?"sv-SE":"en-GB";
+      els.updatedLabel.textContent=t("updated")+" "+new Date().toLocaleTimeString(loc);
+    })
+    .catch(function(err){ console.error(err); showMessage(t("error"),true); })
+    .finally(function(){ els.refreshBtn.classList.remove("spinning"); });
+}
+
+/* ================================================================
+   I18N
+================================================================ */
+function applyI18n(){
+  document.documentElement.lang=state.lang;
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    el.textContent=t(el.getAttribute("data-i18n"));
+  });
+  els.footerNote.textContent=t("footerNote");
+  if(state.view==="standings"){
+    var band=BANDS[state.band];
+    var bandName=lv(band);
+    els.standingsH1.textContent=bandName+" Band — "+t("h1");
+    document.title=bandName+" Band — VDL";
+  }
+}
+
+/* ================================================================
+   EVENTS
+================================================================ */
+els.backBtn.addEventListener("click", showHome);
+els.brandHome.addEventListener("click", showHome);
+
+els.langSelect.addEventListener("change", function(){
+  state.lang=this.value;
+  applyI18n();
+  if(state.view==="home"){
+    buildBandGrid();
+  } else {
+    buildDivisionTabs();
+    buildHead();
+    renderRows();
+  }
+});
+
+els.refreshBtn.addEventListener("click", function(){ loadDivision(true); });
+
+/* ================================================================
+   INIT
+================================================================ */
+state.lang="en";
+els.langSelect.value="en";
+showHome();
+
+})();
+</script>
+</body>
+</html>
