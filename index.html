@@ -69,7 +69,7 @@
   /* ====== HOME ====== */
   .home-wrap{max-width:780px;margin:0 auto;padding:60px 20px 80px;text-align:center;}
   .home-logo{margin-bottom:36px;}
-  .home-logo svg{width:120px;height:120px;}
+  .home-logo img{width:240px;height:240px;object-fit:contain;}
   .home-title{
     font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;
     text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0 0 10px;
@@ -237,19 +237,7 @@
 <div id="view-home">
   <div class="home-wrap">
     <div class="home-logo">
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="60" cy="60" r="56" fill="#11151C"/>
-        <circle cx="60" cy="60" r="48" fill="none" stroke="#2A3240" stroke-width="2"/>
-        <circle cx="60" cy="60" r="40" fill="#1E2738"/>
-        <circle cx="60" cy="60" r="30" fill="#C8102E"/>
-        <circle cx="60" cy="60" r="20" fill="#FFFFFF"/>
-        <circle cx="60" cy="60" r="10" fill="#C8102E"/>
-        <circle cx="60" cy="60" r="4"  fill="#D4A437"/>
-        <!-- dart -->
-        <line x1="60" y1="4" x2="60" y2="56" stroke="#D4A437" stroke-width="2.5" stroke-linecap="round"/>
-        <polygon points="60,4 56,14 64,14" fill="#D4A437"/>
-        <rect x="57.5" y="2" width="5" height="5" rx="1" fill="#C8D4E0"/>
-      </svg>
+      <img src="images/vdl-logo.png" alt="VDL Logo">
     </div>
     <h1 class="home-title" data-i18n="homeTitle">Virtual Darts League</h1>
     <p class="home-sub" data-i18n="homeSub">Choose your league to view the standings</p>
@@ -406,13 +394,13 @@ var COLUMNS = [
 var I18N = {
   en:{homeTitle:"Virtual Darts League",homeSub:"Choose your league to view the standings",chooseLbl:"View Standings",h1:"Standings",sub:"Data synced live from the league's official spreadsheet.",live:"Live",refresh:"Refresh",loading:"Loading data…",error:"Could not load data for this division.",retry:"Try again",empty:"No results yet for this division.",updated:"Updated at",back:"Back",pts:"PTS",footerNote:"Data synced live from Google Sheets."},
   pt:{homeTitle:"Virtual Darts League",homeSub:"Escolha a sua liga para ver as classificações",chooseLbl:"Ver Classificações",h1:"Classificações",sub:"Dados sincronizados em direto a partir da folha oficial da liga.",live:"Em direto",refresh:"Atualizar",loading:"A carregar dados…",error:"Não foi possível carregar os dados desta divisão.",retry:"Tentar novamente",empty:"Ainda não há resultados nesta divisão.",updated:"Atualizado às",back:"Voltar",pts:"PTS",footerNote:"Dados sincronizados em direto a partir do Google Sheets."},
-  es:{homeTitle:"Liga Virtual de Dardos",homeSub:"Elige tu liga para ver las clasificaciones",chooseLbl:"Ver Clasificación",h1:"Clasificaciones",sub:"Datos sincronizados en vivo desde la hoja oficial de la liga.",live:"En vivo",refresh:"Actualizar",loading:"Cargando datos…",error:"No se pudieron cargar los datos de esta división.",retry:"Reintentar",empty:"Aún no hay resultados en esta división.",updated:"Actualizado a las",back:"Volver",pts:"PTS",footerNote:"Datos sincronizados en vivo desde Google Sheets."},
-  fr:{homeTitle:"Ligue Virtuelle de Fléchettes",homeSub:"Choisissez votre ligue pour voir les classements",chooseLbl:"Voir le Classement",h1:"Classements",sub:"Données synchronisées en direct depuis la feuille officielle de la ligue.",live:"En direct",refresh:"Actualiser",loading:"Chargement des données…",error:"Impossible de charger les données de cette division.",retry:"Réessayer",empty:"Pas encore de résultats dans cette division.",updated:"Mis à jour à",back:"Retour",pts:"PTS",footerNote:"Données synchronisées en direct depuis Google Sheets."},
-  pl:{homeTitle:"Wirtualna Liga Darta",homeSub:"Wybierz ligę, aby zobaczyć tabelę",chooseLbl:"Zobacz Tabelę",h1:"Tabela",sub:"Dane synchronizowane na żywo z oficjalnego arkusza ligi.",live:"Na żywo",refresh:"Odśwież",loading:"Ładowanie danych…",error:"Nie udało się załadować danych tej dywizji.",retry:"Spróbuj ponownie",empty:"Brak wyników w tej dywizji.",updated:"Zaktualizowano o",back:"Powrót",pts:"PKT",footerNote:"Dane synchronizowane na żywo z Google Sheets."},
-  sv:{homeTitle:"Virtuell Dartliga",homeSub:"Välj din liga för att se tabellen",chooseLbl:"Visa Tabell",h1:"Tabeller",sub:"Data synkroniseras live från ligans officiella kalkylblad.",live:"Live",refresh:"Uppdatera",loading:"Laddar data…",error:"Kunde inte ladda data för denna division.",retry:"Försök igen",empty:"Inga resultat än i denna division.",updated:"Uppdaterad kl.",back:"Tillbaka",pts:"P",footerNote:"Data synkroniseras live från Google Sheets."},
-  de:{homeTitle:"Virtuelle Dart-Liga",homeSub:"Wähle deine Liga, um die Tabelle zu sehen",chooseLbl:"Tabelle ansehen",h1:"Tabellen",sub:"Daten werden live aus dem offiziellen Ligablatt synchronisiert.",live:"Live",refresh:"Aktualisieren",loading:"Daten werden geladen…",error:"Die Daten für diese Division konnten nicht geladen werden.",retry:"Erneut versuchen",empty:"Noch keine Ergebnisse in dieser Division.",updated:"Aktualisiert um",back:"Zurück",pts:"Pkt",footerNote:"Daten werden live von Google Sheets synchronisiert."},
-  da:{homeTitle:"Virtuel Dartliga",homeSub:"Vælg din liga for at se tabellen",chooseLbl:"Se Tabellen",h1:"Tabeller",sub:"Data synkroniseres live fra ligaens officielle regneark.",live:"Live",refresh:"Opdater",loading:"Indlæser data…",error:"Kunne ikke indlæse data for denne division.",retry:"Prøv igen",empty:"Ingen resultater endnu i denne division.",updated:"Opdateret kl.",back:"Tilbage",pts:"Pt",footerNote:"Data synkroniseres live fra Google Sheets."},
-  nl:{homeTitle:"Virtuele Darts Competitie",homeSub:"Kies je competitie om de standen te bekijken",chooseLbl:"Standen bekijken",h1:"Standen",sub:"Data wordt live gesynchroniseerd vanuit het officiële competitieblad.",live:"Live",refresh:"Vernieuwen",loading:"Data laden…",error:"Kon de data voor deze divisie niet laden.",retry:"Opnieuw proberen",empty:"Nog geen resultaten in deze divisie.",updated:"Bijgewerkt om",back:"Terug",pts:"Pnt",footerNote:"Data wordt live gesynchroniseerd vanuit Google Sheets."},
+  es:{homeTitle:"Virtual Darts League",homeSub:"Elige tu liga para ver las clasificaciones",chooseLbl:"Ver Clasificación",h1:"Clasificaciones",sub:"Datos sincronizados en vivo desde la hoja oficial de la liga.",live:"En vivo",refresh:"Actualizar",loading:"Cargando datos…",error:"No se pudieron cargar los datos de esta división.",retry:"Reintentar",empty:"Aún no hay resultados en esta división.",updated:"Actualizado a las",back:"Volver",pts:"PTS",footerNote:"Datos sincronizados en vivo desde Google Sheets."},
+  fr:{homeTitle:"Virtual Darts League",homeSub:"Choisissez votre ligue pour voir les classements",chooseLbl:"Voir le Classement",h1:"Classements",sub:"Données synchronisées en direct depuis la feuille officielle de la ligue.",live:"En direct",refresh:"Actualiser",loading:"Chargement des données…",error:"Impossible de charger les données de cette division.",retry:"Réessayer",empty:"Pas encore de résultats dans cette division.",updated:"Mis à jour à",back:"Retour",pts:"PTS",footerNote:"Données synchronisées en direct depuis Google Sheets."},
+  pl:{homeTitle:"Virtual Darts League",homeSub:"Wybierz ligę, aby zobaczyć tabelę",chooseLbl:"Zobacz Tabelę",h1:"Tabela",sub:"Dane synchronizowane na żywo z oficjalnego arkusza ligi.",live:"Na żywo",refresh:"Odśwież",loading:"Ładowanie danych…",error:"Nie udało się załadować danych tej dywizji.",retry:"Spróbuj ponownie",empty:"Brak wyników w tej dywizji.",updated:"Zaktualizowano o",back:"Powrót",pts:"PKT",footerNote:"Dane synchronizowane na żywo z Google Sheets."},
+  sv:{homeTitle:"Virtual Darts League",homeSub:"Välj din liga för att se tabellen",chooseLbl:"Visa Tabell",h1:"Tabeller",sub:"Data synkroniseras live från ligans officiella kalkylblad.",live:"Live",refresh:"Uppdatera",loading:"Laddar data…",error:"Kunde inte ladda data för denna division.",retry:"Försök igen",empty:"Inga resultat än i denna division.",updated:"Uppdaterad kl.",back:"Tillbaka",pts:"P",footerNote:"Data synkroniseras live från Google Sheets."},
+  de:{homeTitle:"Virtual Darts League",homeSub:"Wähle deine Liga, um die Tabelle zu sehen",chooseLbl:"Tabelle ansehen",h1:"Tabellen",sub:"Daten werden live aus dem offiziellen Ligablatt synchronisiert.",live:"Live",refresh:"Aktualisieren",loading:"Daten werden geladen…",error:"Die Daten für diese Division konnten nicht geladen werden.",retry:"Erneut versuchen",empty:"Noch keine Ergebnisse in dieser Division.",updated:"Aktualisiert um",back:"Zurück",pts:"Pkt",footerNote:"Daten werden live von Google Sheets synchronisiert."},
+  da:{homeTitle:"Virtual Darts League",homeSub:"Vælg din liga for at se tabellen",chooseLbl:"Se Tabellen",h1:"Tabeller",sub:"Data synkroniseres live fra ligaens officielle regneark.",live:"Live",refresh:"Opdater",loading:"Indlæser data…",error:"Kunne ikke indlæse data for denne division.",retry:"Prøv igen",empty:"Ingen resultater endnu i denne division.",updated:"Opdateret kl.",back:"Tilbage",pts:"Pt",footerNote:"Data synkroniseres live fra Google Sheets."},
+  nl:{homeTitle:"Virtual Darts League",homeSub:"Kies je competitie om de standen te bekijken",chooseLbl:"Standen bekijken",h1:"Standen",sub:"Data wordt live gesynchroniseerd vanuit het officiële competitieblad.",live:"Live",refresh:"Vernieuwen",loading:"Data laden…",error:"Kon de data voor deze divisie niet laden.",retry:"Opnieuw proberen",empty:"Nog geen resultaten in deze divisie.",updated:"Bijgewerkt om",back:"Terug",pts:"Pnt",footerNote:"Data wordt live gesynchroniseerd vanuit Google Sheets."},
 };
 
 /* ================================================================
