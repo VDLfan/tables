@@ -69,7 +69,7 @@
   /* ====== HOME ====== */
   .home-wrap{max-width:780px;margin:0 auto;padding:60px 20px 80px;text-align:center;}
   .home-logo{margin-bottom:36px;}
-  .home-logo img{width:240px;height:240px;object-fit:contain;}
+  .home-logo svg{width:120px;height:120px;}
   .home-title{
     font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;
     text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0 0 10px;
@@ -227,10 +227,8 @@
       <option value="pl">🇵🇱 PL</option>
       <option value="sv">🇸🇪 SV</option>
       <option value="de">🇩🇪 DE</option>
-      <option value="at">🇦🇹 AT</option>
       <option value="da">🇩🇰 DA</option>
       <option value="nl">🇳🇱 NL</option>
-      <option value="be">🇧🇪 BE</option>
     </select>
   </div>
 </header>
@@ -239,7 +237,19 @@
 <div id="view-home">
   <div class="home-wrap">
     <div class="home-logo">
-      <img src="images/vdl-logo.png" alt="VDL Logo">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="56" fill="#11151C"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="#2A3240" stroke-width="2"/>
+        <circle cx="60" cy="60" r="40" fill="#1E2738"/>
+        <circle cx="60" cy="60" r="30" fill="#C8102E"/>
+        <circle cx="60" cy="60" r="20" fill="#FFFFFF"/>
+        <circle cx="60" cy="60" r="10" fill="#C8102E"/>
+        <circle cx="60" cy="60" r="4"  fill="#D4A437"/>
+        <!-- dart -->
+        <line x1="60" y1="4" x2="60" y2="56" stroke="#D4A437" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="60,4 56,14 64,14" fill="#D4A437"/>
+        <rect x="57.5" y="2" width="5" height="5" rx="1" fill="#C8D4E0"/>
+      </svg>
     </div>
     <h1 class="home-title" data-i18n="homeTitle">Virtual Darts League</h1>
     <p class="home-sub" data-i18n="homeSub">Choose your league to view the standings</p>
@@ -296,101 +306,101 @@ var BANDS = {
     key:"platinum", sheetId:"1yVALkrBiEvPGELeXbaAkpqTwX7GZ_m4mknhP17ys1k8",
     color:"#C0CAD8", icon:"⬡",
     en:"Platinum", pt:"Platinum", es:"Platinum", fr:"Platinum",
-    pl:"Platinum", sv:"Platinum", de:"Platinum", at:"Platinum",
-    da:"Platinum", nl:"Platinum", be:"Platinum",
+    pl:"Platinum", sv:"Platinum", de:"Platinum",
+    da:"Platinum", nl:"Platinum",
     divisions:[
-      {sheet:"Platinum PL",  en:"Premier League", pt:"Liga Principal", es:"Liga Premier", fr:"Ligue Premier", pl:"Liga Premierowa", sv:"Premier League", de:"Premier League", at:"Premier League", da:"Premier League", nl:"Premier League", be:"Premier League"},
-      {sheet:"Platinum Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
-      {sheet:"Platinum Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
-      {sheet:"Platinum Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
-      {sheet:"Platinum Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
-      {sheet:"Platinum Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
-      {sheet:"Platinum Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
-      {sheet:"Platinum Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
-      {sheet:"Platinum Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
-      {sheet:"Platinum Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+      {sheet:"Platinum PL",  en:"Premier League", pt:"Liga Principal", es:"Liga Premier", fr:"Ligue Premier", pl:"Liga Premierowa", sv:"Premier League", de:"Premier League", da:"Premier League", nl:"Premier League"},
+      {sheet:"Platinum Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",da:"Division 1",nl:"Divisie 1"},
+      {sheet:"Platinum Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",da:"Division 2",nl:"Divisie 2"},
+      {sheet:"Platinum Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",da:"Division 3",nl:"Divisie 3"},
+      {sheet:"Platinum Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",da:"Division 4",nl:"Divisie 4"},
+      {sheet:"Platinum Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",da:"Division 5",nl:"Divisie 5"},
+      {sheet:"Platinum Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",da:"Division 6",nl:"Divisie 6"},
+      {sheet:"Platinum Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",da:"Division 7",nl:"Divisie 7"},
+      {sheet:"Platinum Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",da:"Division 8",nl:"Divisie 8"},
+      {sheet:"Platinum Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",da:"Division 9",nl:"Divisie 9"}
     ]
   },
   gold: {
     key:"gold", sheetId:"18KMO6gFf6zhzU-9CnXARWmOXJnG5X8hAI1-1LsSvnc8",
     color:"#D4A437", icon:"★",
     en:"Gold", pt:"Gold", es:"Gold", fr:"Gold",
-    pl:"Gold", sv:"Gold", de:"Gold", at:"Gold",
-    da:"Gold", nl:"Gold", be:"Gold",
+    pl:"Gold", sv:"Gold", de:"Gold",
+    da:"Gold", nl:"Gold",
     divisions:[
-      {sheet:"Gold PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",at:"Premier League",da:"Premier League",nl:"Premier League",be:"Premier League"},
-      {sheet:"Gold Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
-      {sheet:"Gold Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
-      {sheet:"Gold Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
-      {sheet:"Gold Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
-      {sheet:"Gold Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
-      {sheet:"Gold Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
-      {sheet:"Gold Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
-      {sheet:"Gold Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
-      {sheet:"Gold Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+      {sheet:"Gold PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",da:"Premier League",nl:"Premier League"},
+      {sheet:"Gold Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",da:"Division 1",nl:"Divisie 1"},
+      {sheet:"Gold Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",da:"Division 2",nl:"Divisie 2"},
+      {sheet:"Gold Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",da:"Division 3",nl:"Divisie 3"},
+      {sheet:"Gold Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",da:"Division 4",nl:"Divisie 4"},
+      {sheet:"Gold Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",da:"Division 5",nl:"Divisie 5"},
+      {sheet:"Gold Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",da:"Division 6",nl:"Divisie 6"},
+      {sheet:"Gold Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",da:"Division 7",nl:"Divisie 7"},
+      {sheet:"Gold Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",da:"Division 8",nl:"Divisie 8"},
+      {sheet:"Gold Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",da:"Division 9",nl:"Divisie 9"}
     ]
   },
   silver: {
     key:"silver", sheetId:"1zgvu8lcFS77QVxOdUbRaVY2dAJvA5gApg9VuvLfPCB8",
     color:"#9AA5B1", icon:"◆",
     en:"Silver", pt:"Silver", es:"Silver", fr:"Silver",
-    pl:"Silver", sv:"Silver", de:"Silver", at:"Silver",
-    da:"Silver", nl:"Silver", be:"Silver",
+    pl:"Silver", sv:"Silver", de:"Silver",
+    da:"Silver", nl:"Silver",
     divisions:[
-      {sheet:"Silver PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",at:"Premier League",da:"Premier League",nl:"Premier League",be:"Premier League"},
-      {sheet:"Silver Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
-      {sheet:"Silver Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
-      {sheet:"Silver Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
-      {sheet:"Silver Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
-      {sheet:"Silver Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
-      {sheet:"Silver Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
-      {sheet:"Silver Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
-      {sheet:"Silver Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
-      {sheet:"Silver Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+      {sheet:"Silver PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",da:"Premier League",nl:"Premier League"},
+      {sheet:"Silver Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",da:"Division 1",nl:"Divisie 1"},
+      {sheet:"Silver Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",da:"Division 2",nl:"Divisie 2"},
+      {sheet:"Silver Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",da:"Division 3",nl:"Divisie 3"},
+      {sheet:"Silver Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",da:"Division 4",nl:"Divisie 4"},
+      {sheet:"Silver Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",da:"Division 5",nl:"Divisie 5"},
+      {sheet:"Silver Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",da:"Division 6",nl:"Divisie 6"},
+      {sheet:"Silver Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",da:"Division 7",nl:"Divisie 7"},
+      {sheet:"Silver Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",da:"Division 8",nl:"Divisie 8"},
+      {sheet:"Silver Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",da:"Division 9",nl:"Divisie 9"}
     ]
   },
   bronze: {
     key:"bronze", sheetId:"1u3qARt8pWOdn5F8gmXTcHjNo3QjOLnQk1sHDNyfmuGQ",
     color:"#C58A52", icon:"●",
     en:"Bronze", pt:"Bronze", es:"Bronze", fr:"Bronze",
-    pl:"Bronze", sv:"Bronze", de:"Bronze", at:"Bronze",
-    da:"Bronze", nl:"Bronze", be:"Bronze",
+    pl:"Bronze", sv:"Bronze", de:"Bronze",
+    da:"Bronze", nl:"Bronze",
     divisions:[
-      {sheet:"Bronze PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",at:"Premier League",da:"Premier League",nl:"Premier League",be:"Premier League"},
-      {sheet:"Bronze Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",at:"Division 1",da:"Division 1",nl:"Divisie 1",be:"Divisie 1"},
-      {sheet:"Bronze Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",at:"Division 2",da:"Division 2",nl:"Divisie 2",be:"Divisie 2"},
-      {sheet:"Bronze Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",at:"Division 3",da:"Division 3",nl:"Divisie 3",be:"Divisie 3"},
-      {sheet:"Bronze Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",at:"Division 4",da:"Division 4",nl:"Divisie 4",be:"Divisie 4"},
-      {sheet:"Bronze Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",at:"Division 5",da:"Division 5",nl:"Divisie 5",be:"Divisie 5"},
-      {sheet:"Bronze Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",at:"Division 6",da:"Division 6",nl:"Divisie 6",be:"Divisie 6"},
-      {sheet:"Bronze Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",at:"Division 7",da:"Division 7",nl:"Divisie 7",be:"Divisie 7"},
-      {sheet:"Bronze Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",at:"Division 8",da:"Division 8",nl:"Divisie 8",be:"Divisie 8"},
-      {sheet:"Bronze Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",at:"Division 9",da:"Division 9",nl:"Divisie 9",be:"Divisie 9"}
+      {sheet:"Bronze PL",  en:"Premier League",pt:"Liga Principal",es:"Liga Premier",fr:"Ligue Premier",pl:"Liga Premierowa",sv:"Premier League",de:"Premier League",da:"Premier League",nl:"Premier League"},
+      {sheet:"Bronze Div1",en:"Division 1",pt:"Divisão 1",es:"División 1",fr:"Division 1",pl:"Dywizja 1",sv:"Division 1",de:"Division 1",da:"Division 1",nl:"Divisie 1"},
+      {sheet:"Bronze Div2",en:"Division 2",pt:"Divisão 2",es:"División 2",fr:"Division 2",pl:"Dywizja 2",sv:"Division 2",de:"Division 2",da:"Division 2",nl:"Divisie 2"},
+      {sheet:"Bronze Div3",en:"Division 3",pt:"Divisão 3",es:"División 3",fr:"Division 3",pl:"Dywizja 3",sv:"Division 3",de:"Division 3",da:"Division 3",nl:"Divisie 3"},
+      {sheet:"Bronze Div4",en:"Division 4",pt:"Divisão 4",es:"División 4",fr:"Division 4",pl:"Dywizja 4",sv:"Division 4",de:"Division 4",da:"Division 4",nl:"Divisie 4"},
+      {sheet:"Bronze Div5",en:"Division 5",pt:"Divisão 5",es:"División 5",fr:"Division 5",pl:"Dywizja 5",sv:"Division 5",de:"Division 5",da:"Division 5",nl:"Divisie 5"},
+      {sheet:"Bronze Div6",en:"Division 6",pt:"Divisão 6",es:"División 6",fr:"Division 6",pl:"Dywizja 6",sv:"Division 6",de:"Division 6",da:"Division 6",nl:"Divisie 6"},
+      {sheet:"Bronze Div7",en:"Division 7",pt:"Divisão 7",es:"División 7",fr:"Division 7",pl:"Dywizja 7",sv:"Division 7",de:"Division 7",da:"Division 7",nl:"Divisie 7"},
+      {sheet:"Bronze Div8",en:"Division 8",pt:"Divisão 8",es:"División 8",fr:"Division 8",pl:"Dywizja 8",sv:"Division 8",de:"Division 8",da:"Division 8",nl:"Divisie 8"},
+      {sheet:"Bronze Div9",en:"Division 9",pt:"Divisão 9",es:"División 9",fr:"Division 9",pl:"Dywizja 9",sv:"Division 9",de:"Division 9",da:"Division 9",nl:"Divisie 9"}
     ]
   }
 };
 
 var COLUMNS = [
-  {key:"pos",  idx:0,  en:"#",   pt:"#",   es:"#",   fr:"#",   pl:"#",   sv:"#",   de:"#",   at:"#",   da:"#",   nl:"#",   be:"#",   numeric:true},
-  {key:"player",idx:1, en:"Player",pt:"Jogador",es:"Jugador",fr:"Joueur",pl:"Gracz",sv:"Spelare",de:"Spieler",at:"Spieler",da:"Spiller",nl:"Speler",be:"Speler",numeric:false},
-  {key:"p",   idx:2,  en:"P",  pt:"J",  es:"PJ", fr:"J",  pl:"M",  sv:"S",  de:"S",  at:"S",  da:"S",  nl:"S",  be:"S",  numeric:true,title_en:"Played",title_pt:"Jogos",title_es:"Jugados",title_fr:"Joués",title_pl:"Mecze",title_sv:"Spelade",title_de:"Spiele",title_at:"Spiele",title_da:"Spillede",title_nl:"Gespeeld",title_be:"Gespeeld"},
-  {key:"w",   idx:3,  en:"W",  pt:"V",  es:"G",  fr:"V",  pl:"W",  sv:"V",  de:"S",  at:"S",  da:"V",  nl:"W",  be:"W",  numeric:true,title_en:"Won",title_pt:"Vitórias",title_es:"Ganados",title_fr:"Victoires",title_pl:"Wygrane",title_sv:"Vinster",title_de:"Siege",title_at:"Siege",title_da:"Vundet",title_nl:"Gewonnen",title_be:"Gewonnen"},
-  {key:"d",   idx:4,  en:"D",  pt:"E",  es:"E",  fr:"N",  pl:"R",  sv:"O",  de:"U",  at:"U",  da:"U",  nl:"G",  be:"G",  numeric:true,title_en:"Drawn",title_pt:"Empates",title_es:"Empates",title_fr:"Nuls",title_pl:"Remisy",title_sv:"Oavgjort",title_de:"Unentschieden",title_at:"Unentschieden",title_da:"Uafgjort",title_nl:"Gelijk",title_be:"Gelijk"},
-  {key:"l",   idx:5,  en:"L",  pt:"D",  es:"P",  fr:"D",  pl:"P",  sv:"F",  de:"N",  at:"N",  da:"T",  nl:"V",  be:"V",  numeric:true,title_en:"Lost",title_pt:"Derrotas",title_es:"Perdidos",title_fr:"Défaites",title_pl:"Przegrane",title_sv:"Förluster",title_de:"Niederlagen",title_at:"Niederlagen",title_da:"Tabt",title_nl:"Verloren",title_be:"Verloren"},
-  {key:"f",   idx:6,  en:"F",  pt:"M",  es:"FA", fr:"BP", pl:"S",  sv:"SF", de:"Bf", at:"Bf", da:"S",  nl:"V",  be:"V",  numeric:true,title_en:"Legs For",title_pt:"Legs Marcados",title_es:"Legs a Favor",title_fr:"Legs Pour",title_pl:"Legs za",title_sv:"Legs för",title_de:"Legs dafür",title_at:"Legs dafür",title_da:"Legs for",title_nl:"Legs voor",title_be:"Legs voor"},
-  {key:"a",   idx:7,  en:"A",  pt:"S",  es:"EC", fr:"BC", pl:"Str",sv:"SM", de:"Bg", at:"Bg", da:"I",  nl:"T",  be:"T",  numeric:true,title_en:"Legs Against",title_pt:"Legs Sofridos",title_es:"Legs en Contra",title_fr:"Legs Contre",title_pl:"Legs przeciw",title_sv:"Legs mot",title_de:"Legs dagegen",title_at:"Legs dagegen",title_da:"Legs imod",title_nl:"Legs tegen",title_be:"Legs tegen"},
-  {key:"diff",idx:8,  en:"+/-",pt:"+/-",es:"+/-",fr:"+/-",pl:"+/-",sv:"+/-",de:"+/-",at:"+/-",da:"+/-",nl:"+/-",be:"+/-",numeric:true,title_en:"Leg Difference",title_pt:"Diferença",title_es:"Diferencia",title_fr:"Différence",title_pl:"Różnica",title_sv:"Differens",title_de:"Differenz",title_at:"Differenz",title_da:"Forskel",title_nl:"Verschil",title_be:"Verschil"},
-  {key:"pts", idx:9,  en:"Pts",pt:"Pts",es:"Pts",fr:"Pts",pl:"Pkt",sv:"Pts",de:"Pkt",at:"Pkt",da:"Pt", nl:"Pnt",be:"Pnt",numeric:true,isPts:true,title_en:"Points",title_pt:"Pontos",title_es:"Puntos",title_fr:"Points",title_pl:"Punkty",title_sv:"Poäng",title_de:"Punkte",title_at:"Punkte",title_da:"Point",title_nl:"Punten",title_be:"Punten"},
-  {key:"avg", idx:12, en:"Avg",pt:"Avg",es:"Med",fr:"Moy",pl:"Śr", sv:"Sn", de:"Schn",at:"Schn",da:"Gns",nl:"Gem",be:"Gem",numeric:true,decimals:2,title_en:"Match Average",title_pt:"Média de jogo",title_es:"Media por partido",title_fr:"Moyenne par match",title_pl:"Średnia meczu",title_sv:"Matchsnitt",title_de:"Spielschnitt",title_at:"Spielschnitt",title_da:"Kampgennemsnit",title_nl:"Wedstrijdgemiddelde",title_be:"Wedstrijdgemiddelde"},
-  {key:"first9",idx:13,en:"1st9",pt:"1ªs9",es:"1ªs9",fr:"1ers9",pl:"1-9",sv:"F9",de:"E9",at:"E9",da:"F9",nl:"E9",be:"E9",numeric:true,decimals:2,title_en:"First 9 Darts Average",title_pt:"Média das primeiras 9 setas",title_es:"Media primeras 9 setas",title_fr:"Moyenne 9 premières fléchettes",title_pl:"Średnia pierwszych 9 rzutów",title_sv:"Snitt första 9",title_de:"Schnitt erste 9",title_at:"Schnitt erste 9",title_da:"Snit første 9",title_nl:"Gem. eerste 9",title_be:"Gem. eerste 9"},
-  {key:"s60", idx:14, en:"60+",pt:"60+",es:"60+",fr:"60+",pl:"60+",sv:"60+",de:"60+",at:"60+",da:"60+",nl:"60+",be:"60+",numeric:true,title_en:"Scores 60–79",title_pt:"Acertos 60 a 79",title_es:"Marcas 60–79",title_fr:"Scores 60–79",title_pl:"Wyniki 60–79",title_sv:"Poäng 60–79",title_de:"Werte 60–79",title_at:"Werte 60–79",title_da:"Point 60–79",title_nl:"Scores 60–79",title_be:"Scores 60–79"},
-  {key:"s80", idx:15, en:"80+",pt:"80+",es:"80+",fr:"80+",pl:"80+",sv:"80+",de:"80+",at:"80+",da:"80+",nl:"80+",be:"80+",numeric:true,title_en:"Scores 80–99",title_pt:"Acertos 80 a 99",title_es:"Marcas 80–99",title_fr:"Scores 80–99",title_pl:"Wyniki 80–99",title_sv:"Poäng 80–99",title_de:"Werte 80–99",title_at:"Werte 80–99",title_da:"Point 80–99",title_nl:"Scores 80–99",title_be:"Scores 80–99"},
-  {key:"s100",idx:16, en:"100+",pt:"100+",es:"100+",fr:"100+",pl:"100+",sv:"100+",de:"100+",at:"100+",da:"100+",nl:"100+",be:"100+",numeric:true,title_en:"Scores 100–119",title_pt:"Acertos 100 a 119",title_es:"Marcas 100–119",title_fr:"Scores 100–119",title_pl:"Wyniki 100–119",title_sv:"Poäng 100–119",title_de:"Werte 100–119",title_at:"Werte 100–119",title_da:"Point 100–119",title_nl:"Scores 100–119",title_be:"Scores 100–119"},
-  {key:"s120",idx:17, en:"120+",pt:"120+",es:"120+",fr:"120+",pl:"120+",sv:"120+",de:"120+",at:"120+",da:"120+",nl:"120+",be:"120+",numeric:true,title_en:"Scores 120–139",title_pt:"Acertos 120 a 139",title_es:"Marcas 120–139",title_fr:"Scores 120–139",title_pl:"Wyniki 120–139",title_sv:"Poäng 120–139",title_de:"Werte 120–139",title_at:"Werte 120–139",title_da:"Point 120–139",title_nl:"Scores 120–139",title_be:"Scores 120–139"},
-  {key:"s140",idx:18, en:"140+",pt:"140+",es:"140+",fr:"140+",pl:"140+",sv:"140+",de:"140+",at:"140+",da:"140+",nl:"140+",be:"140+",numeric:true,title_en:"Scores 140–179",title_pt:"Acertos 140 a 179",title_es:"Marcas 140–179",title_fr:"Scores 140–179",title_pl:"Wyniki 140–179",title_sv:"Poäng 140–179",title_de:"Werte 140–179",title_at:"Werte 140–179",title_da:"Point 140–179",title_nl:"Scores 140–179",title_be:"Scores 140–179"},
-  {key:"t180",idx:19, en:"180s",pt:"180s",es:"180s",fr:"180s",pl:"180s",sv:"180s",de:"180s",at:"180s",da:"180s",nl:"180s",be:"180s",numeric:true,isHot:true,title_en:"Maximums (180)",title_pt:"Máximos (180)",title_es:"Máximos (180)",title_fr:"Maximums (180)",title_pl:"Maksima (180)",title_sv:"Maximal (180)",title_de:"Maximum (180)",title_at:"Maximum (180)",title_da:"Maksimum (180)",title_nl:"Maximum (180)",title_be:"Maximum (180)"},
-  {key:"hco", idx:20, en:"H/Out",pt:"Fecho Máx.",es:"Cierre Máx.",fr:"Finition Max.",pl:"Max. zamknięcie",sv:"Bästa Checkout",de:"Höchster Checkout",at:"Höchster Checkout",da:"Højeste Checkout",nl:"Hoogste Checkout",be:"Hoogste Checkout",numeric:true,isHot:true,title_en:"Highest Checkout",title_pt:"Maior fecho de leg",title_es:"Cierre máximo",title_fr:"Finition maximale",title_pl:"Najwyższe zamknięcie",title_sv:"Bästa checkout",title_de:"Höchster Checkout",title_at:"Höchster Checkout",title_da:"Højeste checkout",title_nl:"Hoogste checkout",title_be:"Hoogste checkout"},
-  {key:"bl",  idx:21, en:"Best Leg",pt:"Melhor Leg",es:"Mejor Leg",fr:"Meilleure Manche",pl:"Najlepsza noga",sv:"Bästa Leg",de:"Bestes Leg",at:"Bestes Leg",da:"Bedste Leg",nl:"Beste Leg",be:"Beste Leg",numeric:true,title_en:"Best Leg (fewest darts)",title_pt:"Melhor leg (menos setas)",title_es:"Mejor leg (menos dardos)",title_fr:"Meilleure manche (moins de fléchettes)",title_pl:"Najlepsza noga (najmniej rzutów)",title_sv:"Bästa leg (minst pilar)",title_de:"Bestes Leg (wenigste Darts)",title_at:"Bestes Leg (wenigste Darts)",title_da:"Bedste leg (færreste pile)",title_nl:"Beste leg (minste darts)",title_be:"Beste leg (minste darts)"}
+  {key:"pos",  idx:0,  en:"#",   pt:"#",   es:"#",   fr:"#",   pl:"#",   sv:"#",   de:"#",   da:"#",   nl:"#",   numeric:true},
+  {key:"player",idx:1, en:"Player",pt:"Jogador",es:"Jugador",fr:"Joueur",pl:"Gracz",sv:"Spelare",de:"Spieler",da:"Spiller",nl:"Speler",numeric:false},
+  {key:"p",   idx:2,  en:"P",  pt:"J",  es:"PJ", fr:"J",  pl:"M",  sv:"S",  de:"S",  da:"S",  nl:"S",  numeric:true,title_en:"Played",title_pt:"Jogos",title_es:"Jugados",title_fr:"Joués",title_pl:"Mecze",title_sv:"Spelade",title_de:"Spiele",title_da:"Spillede",title_nl:"Gespeeld"},
+  {key:"w",   idx:3,  en:"W",  pt:"V",  es:"G",  fr:"V",  pl:"W",  sv:"V",  de:"S",  da:"V",  nl:"W",  numeric:true,title_en:"Won",title_pt:"Vitórias",title_es:"Ganados",title_fr:"Victoires",title_pl:"Wygrane",title_sv:"Vinster",title_de:"Siege",title_da:"Vundet",title_nl:"Gewonnen"},
+  {key:"d",   idx:4,  en:"D",  pt:"E",  es:"E",  fr:"N",  pl:"R",  sv:"O",  de:"U",  da:"U",  nl:"G",  numeric:true,title_en:"Drawn",title_pt:"Empates",title_es:"Empates",title_fr:"Nuls",title_pl:"Remisy",title_sv:"Oavgjort",title_de:"Unentschieden",title_da:"Uafgjort",title_nl:"Gelijk"},
+  {key:"l",   idx:5,  en:"L",  pt:"D",  es:"P",  fr:"D",  pl:"P",  sv:"F",  de:"N",  da:"T",  nl:"V",  numeric:true,title_en:"Lost",title_pt:"Derrotas",title_es:"Perdidos",title_fr:"Défaites",title_pl:"Przegrane",title_sv:"Förluster",title_de:"Niederlagen",title_da:"Tabt",title_nl:"Verloren"},
+  {key:"f",   idx:6,  en:"F",  pt:"M",  es:"FA", fr:"BP", pl:"S",  sv:"SF", de:"Bf", da:"S",  nl:"V",  numeric:true,title_en:"Legs For",title_pt:"Legs Marcados",title_es:"Legs a Favor",title_fr:"Legs Pour",title_pl:"Legs za",title_sv:"Legs för",title_de:"Legs dafür",title_da:"Legs for",title_nl:"Legs voor"},
+  {key:"a",   idx:7,  en:"A",  pt:"S",  es:"EC", fr:"BC", pl:"Str",sv:"SM", de:"Bg", da:"I",  nl:"T",  numeric:true,title_en:"Legs Against",title_pt:"Legs Sofridos",title_es:"Legs en Contra",title_fr:"Legs Contre",title_pl:"Legs przeciw",title_sv:"Legs mot",title_de:"Legs dagegen",title_da:"Legs imod",title_nl:"Legs tegen"},
+  {key:"diff",idx:8,  en:"+/-",pt:"+/-",es:"+/-",fr:"+/-",pl:"+/-",sv:"+/-",de:"+/-",da:"+/-",nl:"+/-",numeric:true,title_en:"Leg Difference",title_pt:"Diferença",title_es:"Diferencia",title_fr:"Différence",title_pl:"Różnica",title_sv:"Differens",title_de:"Differenz",title_da:"Forskel",title_nl:"Verschil"},
+  {key:"pts", idx:9,  en:"Pts",pt:"Pts",es:"Pts",fr:"Pts",pl:"Pkt",sv:"Pts",de:"Pkt",da:"Pt", nl:"Pnt",numeric:true,isPts:true,title_en:"Points",title_pt:"Pontos",title_es:"Puntos",title_fr:"Points",title_pl:"Punkty",title_sv:"Poäng",title_de:"Punkte",title_da:"Point",title_nl:"Punten"},
+  {key:"avg", idx:12, en:"Avg",pt:"Avg",es:"Med",fr:"Moy",pl:"Śr", sv:"Sn", de:"Schn",da:"Gns",nl:"Gem",numeric:true,decimals:2,title_en:"Match Average",title_pt:"Média de jogo",title_es:"Media por partido",title_fr:"Moyenne par match",title_pl:"Średnia meczu",title_sv:"Matchsnitt",title_de:"Spielschnitt",title_da:"Kampgennemsnit",title_nl:"Wedstrijdgemiddelde"},
+  {key:"first9",idx:13,en:"1st9",pt:"1ªs9",es:"1ªs9",fr:"1ers9",pl:"1-9",sv:"F9",de:"E9",da:"F9",nl:"E9",numeric:true,decimals:2,title_en:"First 9 Darts Average",title_pt:"Média das primeiras 9 setas",title_es:"Media primeras 9 setas",title_fr:"Moyenne 9 premières fléchettes",title_pl:"Średnia pierwszych 9 rzutów",title_sv:"Snitt första 9",title_de:"Schnitt erste 9",title_da:"Snit første 9",title_nl:"Gem. eerste 9"},
+  {key:"s60", idx:14, en:"60+",pt:"60+",es:"60+",fr:"60+",pl:"60+",sv:"60+",de:"60+",da:"60+",nl:"60+",numeric:true,title_en:"Scores 60–79",title_pt:"Acertos 60 a 79",title_es:"Marcas 60–79",title_fr:"Scores 60–79",title_pl:"Wyniki 60–79",title_sv:"Poäng 60–79",title_de:"Werte 60–79",title_da:"Point 60–79",title_nl:"Scores 60–79"},
+  {key:"s80", idx:15, en:"80+",pt:"80+",es:"80+",fr:"80+",pl:"80+",sv:"80+",de:"80+",da:"80+",nl:"80+",numeric:true,title_en:"Scores 80–99",title_pt:"Acertos 80 a 99",title_es:"Marcas 80–99",title_fr:"Scores 80–99",title_pl:"Wyniki 80–99",title_sv:"Poäng 80–99",title_de:"Werte 80–99",title_da:"Point 80–99",title_nl:"Scores 80–99"},
+  {key:"s100",idx:16, en:"100+",pt:"100+",es:"100+",fr:"100+",pl:"100+",sv:"100+",de:"100+",da:"100+",nl:"100+",numeric:true,title_en:"Scores 100–119",title_pt:"Acertos 100 a 119",title_es:"Marcas 100–119",title_fr:"Scores 100–119",title_pl:"Wyniki 100–119",title_sv:"Poäng 100–119",title_de:"Werte 100–119",title_da:"Point 100–119",title_nl:"Scores 100–119"},
+  {key:"s120",idx:17, en:"120+",pt:"120+",es:"120+",fr:"120+",pl:"120+",sv:"120+",de:"120+",da:"120+",nl:"120+",numeric:true,title_en:"Scores 120–139",title_pt:"Acertos 120 a 139",title_es:"Marcas 120–139",title_fr:"Scores 120–139",title_pl:"Wyniki 120–139",title_sv:"Poäng 120–139",title_de:"Werte 120–139",title_da:"Point 120–139",title_nl:"Scores 120–139"},
+  {key:"s140",idx:18, en:"140+",pt:"140+",es:"140+",fr:"140+",pl:"140+",sv:"140+",de:"140+",da:"140+",nl:"140+",numeric:true,title_en:"Scores 140–179",title_pt:"Acertos 140 a 179",title_es:"Marcas 140–179",title_fr:"Scores 140–179",title_pl:"Wyniki 140–179",title_sv:"Poäng 140–179",title_de:"Werte 140–179",title_da:"Point 140–179",title_nl:"Scores 140–179"},
+  {key:"t180",idx:19, en:"180s",pt:"180s",es:"180s",fr:"180s",pl:"180s",sv:"180s",de:"180s",da:"180s",nl:"180s",numeric:true,isHot:true,title_en:"Maximums (180)",title_pt:"Máximos (180)",title_es:"Máximos (180)",title_fr:"Maximums (180)",title_pl:"Maksima (180)",title_sv:"Maximal (180)",title_de:"Maximum (180)",title_da:"Maksimum (180)",title_nl:"Maximum (180)"},
+  {key:"hco", idx:20, en:"H/Out",pt:"Fecho Máx.",es:"Cierre Máx.",fr:"Finition Max.",pl:"Max. zamknięcie",sv:"Bästa Checkout",de:"Höchster Checkout",da:"Højeste Checkout",nl:"Hoogste Checkout",numeric:true,isHot:true,title_en:"Highest Checkout",title_pt:"Maior fecho de leg",title_es:"Cierre máximo",title_fr:"Finition maximale",title_pl:"Najwyższe zamknięcie",title_sv:"Bästa checkout",title_de:"Höchster Checkout",title_da:"Højeste checkout",title_nl:"Hoogste checkout"},
+  {key:"bl",  idx:21, en:"Best Leg",pt:"Melhor Leg",es:"Mejor Leg",fr:"Meilleure Manche",pl:"Najlepsza noga",sv:"Bästa Leg",de:"Bestes Leg",da:"Bedste Leg",nl:"Beste Leg",numeric:true,title_en:"Best Leg (fewest darts)",title_pt:"Melhor leg (menos setas)",title_es:"Mejor leg (menos dardos)",title_fr:"Meilleure manche (moins de fléchettes)",title_pl:"Najlepsza noga (najmniej rzutów)",title_sv:"Bästa leg (minst pilar)",title_de:"Bestes Leg (wenigste Darts)",title_da:"Bedste leg (færreste pile)",title_nl:"Beste leg (minste darts)"}
 ];
 
 var I18N = {
@@ -401,10 +411,8 @@ var I18N = {
   pl:{homeTitle:"Wirtualna Liga Darta",homeSub:"Wybierz ligę, aby zobaczyć tabelę",chooseLbl:"Zobacz Tabelę",h1:"Tabela",sub:"Dane synchronizowane na żywo z oficjalnego arkusza ligi.",live:"Na żywo",refresh:"Odśwież",loading:"Ładowanie danych…",error:"Nie udało się załadować danych tej dywizji.",retry:"Spróbuj ponownie",empty:"Brak wyników w tej dywizji.",updated:"Zaktualizowano o",back:"Powrót",pts:"PKT",footerNote:"Dane synchronizowane na żywo z Google Sheets."},
   sv:{homeTitle:"Virtuell Dartliga",homeSub:"Välj din liga för att se tabellen",chooseLbl:"Visa Tabell",h1:"Tabeller",sub:"Data synkroniseras live från ligans officiella kalkylblad.",live:"Live",refresh:"Uppdatera",loading:"Laddar data…",error:"Kunde inte ladda data för denna division.",retry:"Försök igen",empty:"Inga resultat än i denna division.",updated:"Uppdaterad kl.",back:"Tillbaka",pts:"P",footerNote:"Data synkroniseras live från Google Sheets."},
   de:{homeTitle:"Virtuelle Dart-Liga",homeSub:"Wähle deine Liga, um die Tabelle zu sehen",chooseLbl:"Tabelle ansehen",h1:"Tabellen",sub:"Daten werden live aus dem offiziellen Ligablatt synchronisiert.",live:"Live",refresh:"Aktualisieren",loading:"Daten werden geladen…",error:"Die Daten für diese Division konnten nicht geladen werden.",retry:"Erneut versuchen",empty:"Noch keine Ergebnisse in dieser Division.",updated:"Aktualisiert um",back:"Zurück",pts:"Pkt",footerNote:"Daten werden live von Google Sheets synchronisiert."},
-  at:{homeTitle:"Virtuelle Dart-Liga",homeSub:"Wähle deine Liga, um die Tabelle zu sehen",chooseLbl:"Tabelle ansehen",h1:"Tabellen",sub:"Daten werden live aus dem offiziellen Ligablatt synchronisiert.",live:"Live",refresh:"Aktualisieren",loading:"Daten werden geladen…",error:"Die Daten für diese Division konnten nicht geladen werden.",retry:"Erneut versuchen",empty:"Noch keine Ergebnisse in dieser Division.",updated:"Aktualisiert um",back:"Zurück",pts:"Pkt",footerNote:"Daten werden live von Google Sheets synchronisiert."},
   da:{homeTitle:"Virtuel Dartliga",homeSub:"Vælg din liga for at se tabellen",chooseLbl:"Se Tabellen",h1:"Tabeller",sub:"Data synkroniseres live fra ligaens officielle regneark.",live:"Live",refresh:"Opdater",loading:"Indlæser data…",error:"Kunne ikke indlæse data for denne division.",retry:"Prøv igen",empty:"Ingen resultater endnu i denne division.",updated:"Opdateret kl.",back:"Tilbage",pts:"Pt",footerNote:"Data synkroniseres live fra Google Sheets."},
   nl:{homeTitle:"Virtuele Darts Competitie",homeSub:"Kies je competitie om de standen te bekijken",chooseLbl:"Standen bekijken",h1:"Standen",sub:"Data wordt live gesynchroniseerd vanuit het officiële competitieblad.",live:"Live",refresh:"Vernieuwen",loading:"Data laden…",error:"Kon de data voor deze divisie niet laden.",retry:"Opnieuw proberen",empty:"Nog geen resultaten in deze divisie.",updated:"Bijgewerkt om",back:"Terug",pts:"Pnt",footerNote:"Data wordt live gesynchroniseerd vanuit Google Sheets."},
-  be:{homeTitle:"Virtuele Darts Competitie",homeSub:"Kies je competitie om de standen te bekijken",chooseLbl:"Standen bekijken",h1:"Standen",sub:"Data wordt live gesynchroniseerd vanuit het officiële competitieblad.",live:"Live",refresh:"Vernieuwen",loading:"Data laden…",error:"Kon de data voor deze divisie niet laden.",retry:"Opnieuw proberen",empty:"Nog geen resultaten in deze divisie.",updated:"Bijgewerkt om",back:"Terug",pts:"Pnt",footerNote:"Data wordt live gesynchroniseerd vanuit Google Sheets."}
 };
 
 /* ================================================================
