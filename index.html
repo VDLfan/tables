@@ -69,7 +69,7 @@
   /* ====== HOME ====== */
   .home-wrap{max-width:780px;margin:0 auto;padding:60px 20px 80px;text-align:center;}
   .home-logo{margin-bottom:36px;}
-  .home-logo svg{width:120px;height:120px;}
+  .home-logo img{width:120px;height:120px;object-fit:contain;}
   .home-title{
     font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:56px;
     text-transform:uppercase;letter-spacing:.01em;line-height:.95;margin:0 0 10px;
@@ -239,19 +239,7 @@
 <div id="view-home">
   <div class="home-wrap">
     <div class="home-logo">
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="60" cy="60" r="56" fill="#11151C"/>
-        <circle cx="60" cy="60" r="48" fill="none" stroke="#2A3240" stroke-width="2"/>
-        <circle cx="60" cy="60" r="40" fill="#1E2738"/>
-        <circle cx="60" cy="60" r="30" fill="#C8102E"/>
-        <circle cx="60" cy="60" r="20" fill="#FFFFFF"/>
-        <circle cx="60" cy="60" r="10" fill="#C8102E"/>
-        <circle cx="60" cy="60" r="4"  fill="#D4A437"/>
-        <!-- dart -->
-        <line x1="60" y1="4" x2="60" y2="56" stroke="#D4A437" stroke-width="2.5" stroke-linecap="round"/>
-        <polygon points="60,4 56,14 64,14" fill="#D4A437"/>
-        <rect x="57.5" y="2" width="5" height="5" rx="1" fill="#C8D4E0"/>
-      </svg>
+      <img src="images/vdl-logo.png" alt="VDL Logo">
     </div>
     <h1 class="home-title" data-i18n="homeTitle">Virtual Darts League</h1>
     <p class="home-sub" data-i18n="homeSub">Choose your league to view the standings</p>
